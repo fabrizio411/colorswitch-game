@@ -1,0 +1,29 @@
+body {
+  background-color: #312f32;
+  display: flex;
+  justify-content: center;
+}
+
+.board {
+  height: 100%;
+  aspect-ratio: 1/1.5;
+  border: 1px solid #676467;
+}
+
+@media (max-width: 600px) {
+  .board {
+    width: 100%;
+  }
+}
+.ball {
+  height: 24px;
+  width: 24px;
+  background-color: #fc0083;
+  border-radius: 100%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 200px;
+}
+
+/*# sourceMappingURL=home.css.map */

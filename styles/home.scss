@@ -1,0 +1,32 @@
+@use './var';
+
+
+body {
+    background-color: var.$bg;
+    display: flex;
+    justify-content: center;
+}
+
+.board {
+    height: 100%;
+    aspect-ratio: 1 / 1.5;
+    border: 1px solid var.$detail-1;
+}
+
+@media (max-width: 600px) {
+    .board {
+        width: 100%;
+    }
+}
+
+.ball {
+    height: 24px;
+    width: 24px;
+    background-color: var.$red;
+    border-radius: 100%;
+
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 200px;
+}
