@@ -1,13 +1,5 @@
-@use './var';
-@use './circle';
-
-
-body {
-    background-color: var.$bg;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+@use 'var';
+@use 'circle';
 
 .board {
     background-color: var.$bg;
@@ -55,7 +47,7 @@ body {
     }
 
     .text-cir.l {
-        @include circle.circle(35px, 30px, left, 3s);
+        @include circle.circle(40px, 30px, left, 3s);
     }
     
     .text-cir.r {
