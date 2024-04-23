@@ -36,12 +36,13 @@ let isJumping = false
 let jumpAnimationFrame
 
 // Jump handlers
-const updateJump = () => {
+function updateJump() {
     if (!myBall.jumpDone) {
         isJumping = true
         jumpAnimationFrame = requestAnimationFrame(updateJump)
         context.clearRect(0, 0, canvasWidth, canvasHeight)
         myBall.jump(context, canvasHeight, count, jumpAnimationFrame)
+        reDraw()
         count++
     } else {
         cancelAnimationFrame(jumpAnimationFrame)
@@ -49,7 +50,7 @@ const updateJump = () => {
         count = 0
     }
 }
-const checkForJump = () => {
+function checkForJump() {
     // Permite seguir saltando
     if (isJumping) {
         // Cnacela la animacion para empezar otra nueva
@@ -62,3 +63,23 @@ const checkForJump = () => {
 }
 
 document.addEventListener('click', checkForJump)
+
+// Obstacle Inicializacion
+const myObstacle = new Obstacle(canvasWidth / 2, 300, 50, 1, 10)
+
+let currentAngle = 0
+function rotateObstacle() {
+    context.clearRect(0, 0, canvasWidth, canvasHeight)
+    reDraw()
+    currentAngle += 0.02
+    requestAnimationFrame(rotateObstacle)
+}
+
+requestAnimationFrame(rotateObstacle)
+
+
+
+function reDraw() {
+    myBall.draw(context)
+    myObstacle.draw(context, currentAngle)
+}
