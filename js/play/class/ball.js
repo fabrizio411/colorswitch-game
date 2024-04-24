@@ -5,7 +5,7 @@ class Ball {
         this.radius = 10
         this.color = undefined
         this.speed = 1.75
-        this.g = -2
+        this.g = -3
         this.jumpDone = false
     }
 

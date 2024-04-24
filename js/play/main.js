@@ -30,6 +30,7 @@ let myBall
 let myObstacle
 let myColorChanger
 let myFinishline
+let myScore
 
 function startGame() {
     gameState = 'on'
@@ -49,6 +50,12 @@ function startGame() {
 
     myFinishline = new Finishline(xPosMiddle, 60, canvasWidth)
     myFinishline.draw(context)
+
+    myScore = new Score()
+    myScore.draw(context)
+
+    myStar = new Star(xPosMiddle, 300)
+    myScore.draw(context)
 }
 
 startGame()
@@ -76,9 +83,11 @@ function endGame() {
 // **** REDIBUJAR TODO **** //
 function reDraw() {
     myFinishline.draw(context)
+    myScore.draw(context)
+    myStar.draw(context)
     myBall.draw(context)
-    myObstacle.draw(context, currentAngle)
     myColorChanger.draw(context)
+    myObstacle.draw(context, currentAngle)
 }
 
 
@@ -94,6 +103,7 @@ function updateJump() {
         myBall.jump(canvasHeight, countJumpFrame)
         handleObsColition(myBall, myObstacle)
         handleChangerColition(myBall, myColorChanger)
+        handleStarColition(myBall, myStar, myScore)
         handleFinishColition(myBall, myFinishline)
         reDraw()
         countJumpFrame++
@@ -128,6 +138,9 @@ canvas.addEventListener('click', checkForJump)
 
 // **** OBSTACULO ROTACION **** // 
 function rotateObstacle() {
+    if (myObstacle.currentAngle >= Math.PI * 2) {
+        myObstacle.currentAngle = 0
+    }
     context.clearRect(0, 0, canvasWidth, canvasHeight)
     reDraw()
     myObstacle.currentAngle += myObstacle.rotationSpeed
@@ -215,10 +228,17 @@ function handleObsColition(ball, obs) {
     }
 }
 
-function handleChangerColition (ball, changer) {
+function handleChangerColition(ball, changer) {
     if (checkCirColition(ball, changer) && changer.isAlive) {
         ball.changeColor()
         changer.isAlive = false
+    }
+}
+
+function handleStarColition(ball, star, score) {
+    if (checkCirColition(ball, star) && star.isAlive) {
+        score.points += 1
+        star.isAlive = false
     }
 }
 
