@@ -1,15 +1,19 @@
 class Ball {
-    constructor(xPos, yPos, color) {
+    constructor(xPos, yPos) {
         this.xPos = xPos
         this.yPos = yPos
         this.radius = 10
-        this.color = color
+        this.color = undefined
         this.speed = 1.75
         this.g = -2
         this.jumpDone = false
     }
 
     draw(context) {
+        if (!this.color) {
+            this.changeColor()
+        }
+        
         context.beginPath()
         context.fillStyle = this.color
         context.arc(this.xPos, this.yPos, this.radius, 0, Math.PI * 2, false)
@@ -17,7 +21,7 @@ class Ball {
         context.closePath()
     }
 
-    jump(context, yOrigin, count, animationFrame) {
+    jump(yOrigin, count) {
         // Ecuaciones de proyectiles en una dimencion para controla salto
         let t = 1/60
         let v = this.speed + this.g * (t * count)
@@ -29,7 +33,16 @@ class Ball {
             this.yPos = yOrigin - this.radius
             this.jumpDone = true
         }
+    }
 
-        this.draw(context)
+    changeColor() {
+        // Cmabiar color aleatoriamente
+        let clrIndex = randomNumber(0, 4)
+        
+        // Para que al cambiar de color no se pueda cambiar al mismo
+        while (colors[clrIndex] === this.color) {
+            clrIndex = randomNumber(0, 4)
+        }
+        this.color = colors[clrIndex]
     }
 }

@@ -12,33 +12,27 @@ class ObsPiece {
     draw(context) {
         let arcStart
         let arcEnd
-        let color
 
         if (this.pieceNumber === 1) {
             arcStart = 0
             arcEnd = Math.PI / 2
-            color = clrRed
         } else if (this.pieceNumber === 2) {
             arcStart = Math.PI / 2
             arcEnd = Math.PI
-            color = clrCian
         } else if (this.pieceNumber === 3) {
             arcStart = Math.PI
             arcEnd = (Math.PI * 3) / 2
-            color = clrYellow
         } else if (this.pieceNumber === 4) {
             arcStart = (Math.PI * 3) / 2
             arcEnd = Math.PI * 2
-            color = clrViolet
         }
 
         context.beginPath()
-        context.strokeStyle = color
+        context.strokeStyle = colors[this.pieceNumber - 1]
         context.lineWidth = this.width
         context.arc(this.xPos, this.yPos, this.radius, arcStart + this.currentAngle, arcEnd + this.currentAngle, false)
         context.stroke()
         context.closePath()
-
     }
 }
 

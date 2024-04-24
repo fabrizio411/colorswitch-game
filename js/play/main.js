@@ -15,17 +15,6 @@ let context = canvas.getContext('2d')
 
 
 
-// Coliciones
-// const getDistance = (xPos1, yPos1, xPos2, yPos2) => {
-//     let result = Math.sqrt(Math.pow(xPos2 - xPos1, 2) + Math.pow(yPos2 - yPos1, 2))
-//     return result
-// }
-
-// Obtener numero random
-// const randomNumber = (min, max) => {
-//     let result = Math.random() * (max - min) + min
-//     return result
-// }
 
 
 // Ball Inicializacion
@@ -41,7 +30,8 @@ function updateJump() {
         isJumping = true
         jumpAnimationFrame = requestAnimationFrame(updateJump)
         context.clearRect(0, 0, canvasWidth, canvasHeight)
-        myBall.jump(context, canvasHeight, count, jumpAnimationFrame)
+        myBall.jump(canvasHeight, count)
+        checkColition(myBall, myObstacle)
         reDraw()
         count++
     } else {
@@ -65,21 +55,79 @@ function checkForJump() {
 document.addEventListener('click', checkForJump)
 
 // Obstacle Inicializacion
-const myObstacle = new Obstacle(canvasWidth / 2, 300, 50, 1, 10)
+const myObstacle = new Obstacle(canvasWidth / 2, 300, 100, 1, 15)
 
 let currentAngle = 0
 function rotateObstacle() {
     context.clearRect(0, 0, canvasWidth, canvasHeight)
     reDraw()
-    currentAngle += 0.02
+    currentAngle += 0.005
     requestAnimationFrame(rotateObstacle)
 }
 
 requestAnimationFrame(rotateObstacle)
 
-
-
 function reDraw() {
     myBall.draw(context)
     myObstacle.draw(context, currentAngle)
+}
+
+// Coliciones
+function getDistance(ball, obs) {
+    let result = Math.sqrt(Math.pow(obs.xPos - ball.xPos, 2) + Math.pow(obs.yPos - ball.yPos, 2))
+    return result
+}
+
+function getLapPosition() {
+    /* ****
+    * Rangos de las piezas
+    * < 25
+    * 25 - 50
+    * 50 - 75
+    * > 75
+    **** */
+    let laps = currentAngle / 6
+    let lapAngle = (laps - Math.floor(laps)) * 100
+    return lapAngle
+}
+
+function getColorColition(ball, obs) {
+    let lapPos = getLapPosition()
+    let clrIndex
+
+    if ((ball.yPos - obs.yPos) > 0) {
+        // Contacto con parte inferior
+        if (lapPos < 25) {
+            clrIndex = 0
+        } else if (lapPos < 50) {
+            clrIndex = 3
+        } else if (lapPos < 75) {
+            clrIndex = 2
+        } else {
+            clrIndex = 1
+        }
+    } else {
+        // Contacto con parte superior
+        if (lapPos < 25) {
+            clrIndex = 2
+        } else if (lapPos < 50) {
+            clrIndex = 1
+        } else if (lapPos < 75) {
+            clrIndex = 0
+        } else {
+            clrIndex = 3
+        }
+    }
+
+    return colors[clrIndex]
+}
+
+function checkColition(ball, obs) {
+    let distance = getDistance(ball, obs)
+
+    if (distance < (ball.radius + obs.radius) && distance > (obs.radius - obs.width + ball.radius)) {
+        if (!(getColorColition(ball, obs) === ball.color)) {
+            alert('funca')
+        }
+    } 
 }
