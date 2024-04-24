@@ -13,12 +13,12 @@ canvas.width = canvasWidth
 
 let context = canvas.getContext('2d')
 
-
+const xPosMiddle = canvasWidth / 2
 
 
 
 // **** BALL INICIALIZACON **** //
-const myBall = new Ball(canvasWidth / 2, canvasHeight - 50, 'white')
+const myBall = new Ball(xPosMiddle, canvasHeight - 50, 'white')
 myBall.draw(context)
 let count = 0
 let isJumping = false
@@ -35,7 +35,8 @@ function updateJump() {
         jumpAnimationFrame = requestAnimationFrame(updateJump)
         context.clearRect(0, 0, canvasWidth, canvasHeight)
         myBall.jump(canvasHeight, count)
-        checkColition(myBall, myObstacle)
+        handleObsColition(myBall, myObstacle)
+        handleChangerColition(myBall, myColorChanger)
         reDraw()
         count++
     } else {
@@ -63,7 +64,7 @@ document.addEventListener('click', checkForJump)
 
 
 // **** OBSTACULO **** // 
-const myObstacle = new Obstacle(canvasWidth / 2, 250, 100, 1, 15)
+const myObstacle = new Obstacle(xPosMiddle, 250, 100, 1, 15)
 
 let currentAngle = 0
 function rotateObstacle() {
@@ -78,11 +79,18 @@ requestAnimationFrame(rotateObstacle)
 
 
 
+// **** COLOR CHANGER **** //
+const myColorChanger = new ColorChanger(xPosMiddle, canvasHeight - 200)
+myColorChanger.draw(context)
+
+
+
 
 // **** REDIBUJAR TODO **** //
 function reDraw() {
     myBall.draw(context)
     myObstacle.draw(context, currentAngle)
+    myColorChanger.draw(context)
 }
 
 
@@ -141,11 +149,25 @@ function getColorColition(ball, obs) {
 
 function checkColition(ball, obs) {
     let distance = getDistance(ball, obs)
-
-    // Evitando colision dentro del circulo, solo en el borde.
-    if (distance < (ball.radius + obs.radius) && distance > (obs.radius - obs.width + ball.radius)) {
-        if (!(getColorColition(ball, obs) === ball.color)) {
-            alert('funca')
-        }
+    if (distance < (ball.radius + obs.radius)) {
+        return true
     } 
+}
+
+function handleObsColition(ball, obs) {
+    // Evitando colision dentro del circulo, solo en el borde.
+    if (checkColition(ball, obs) && getDistance(ball, obs) > (obs.radius - obs.width + ball.radius)) {
+        // Controlando que color hizo colicion
+        if (!(getColorColition(ball, obs) === ball.color)) {
+            alert('fuiste')
+        }
+    }
+}
+
+function handleChangerColition (ball, changer) {
+    if (checkColition(ball, changer) && changer.isAlive) {
+        console.log('true')
+        ball.changeColor()
+        changer.isAlive = false
+    }
 }
