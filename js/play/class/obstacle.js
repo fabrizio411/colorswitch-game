@@ -1,11 +1,10 @@
 class ObsPiece {
-    constructor(xPos, yPos, pieceNumber, radius, currentAngle, rotationSpeed, width) {
+    constructor(xPos, yPos, pieceNumber, radius, currentAngle, width) {
         this.xPos = xPos
         this.yPos = yPos
         this.pieceNumber = pieceNumber
         this.radius = radius
         this.currentAngle = currentAngle
-        this.rotationSpeed = rotationSpeed
         this.width = width
     }
 
@@ -42,6 +41,7 @@ class Obstacle {
         this.yPos = yPos
         this.radius = radius
         this.rotationSpeed = rotationSpeed
+        this.currentAngle = 0
         this.width = width
         this.piece1 = undefined
         this.piece2 = undefined
@@ -49,11 +49,11 @@ class Obstacle {
         this.piece4 = undefined
     }
 
-    draw(context, currentAngle) {
-        this.piece1 = new ObsPiece(this.xPos, this.yPos, 1, this.radius, currentAngle, this.rotationSpeed, this.width) 
-        this.piece2 = new ObsPiece(this.xPos, this.yPos, 2, this.radius, currentAngle, this.rotationSpeed, this.width) 
-        this.piece3 = new ObsPiece(this.xPos, this.yPos, 3, this.radius, currentAngle, this.rotationSpeed, this.width) 
-        this.piece4 = new ObsPiece(this.xPos, this.yPos, 4, this.radius, currentAngle, this.rotationSpeed, this.width) 
+    draw(context) {
+        this.piece1 = new ObsPiece(this.xPos, this.yPos, 1, this.radius, this.currentAngle, this.width) 
+        this.piece2 = new ObsPiece(this.xPos, this.yPos, 2, this.radius, this.currentAngle, this.width) 
+        this.piece3 = new ObsPiece(this.xPos, this.yPos, 3, this.radius, this.currentAngle, this.width) 
+        this.piece4 = new ObsPiece(this.xPos, this.yPos, 4, this.radius, this.currentAngle, this.width) 
 
         this.piece1.draw(context)
         this.piece2.draw(context)
