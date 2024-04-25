@@ -1,4 +1,5 @@
 @use 'var';
+@use 'mix';
 
 canvas {
     background-color: var.$bg;
@@ -12,4 +13,82 @@ canvas {
         height: 100%;
         width: 100%;
     }
+}
+
+
+.board {
+    @include mix.board();
+    padding: 0;
+    display: none
+}
+
+.title {
+    @include mix.title();
+    margin-top: 15px;
+    margin-bottom: 90px;
+}
+
+.score-box {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    color: var.$white;
+    margin-bottom: 7px;
+
+    .text {
+        margin-bottom: 7px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        background-color: var.$detail-1;
+    }
+
+    .text.best {
+        background-color: var.$detail-orange;
+    }
+
+    .score {
+        font-weight: 500;
+    }
+}
+
+.buttons {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    .stars-box {
+        align-self: flex-start;
+        margin-left: 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .number {
+            font-size: 2rem;
+            color: var.$detail-yellow;
+        }
+    }
+
+    .play-btn {
+        @include mix.btn();
+        height: 90px;
+        width: 90px;
+
+        svg {
+            transform: scale(2);
+        }
+    }
+}
+
+.back-btn {
+    @include mix.btn();
+    position: absolute;
+    top: 0;
+    left: 10px;
 }

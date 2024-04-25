@@ -335,7 +335,7 @@
   align-items: center;
 }
 .play .play-btn svg {
-  fill: rgb(170, 170, 170);
+  fill: #afafaf;
   scale: 1;
   transition: scale 0.2s ease;
 }
@@ -362,7 +362,7 @@
   transition: scale 0.2s ease;
 }
 .buttons .btn svg {
-  fill: rgb(170, 170, 170);
+  fill: #afafaf;
   transition: fill 0.2s ease;
 }
 .buttons .btn:hover {

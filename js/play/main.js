@@ -21,6 +21,11 @@ const xPosMiddle = canvasWidth / 2
 
 // **** LISTENERS **** //
 canvas.addEventListener('click', checkForJump)
+document.querySelector('#restart-btn').addEventListener('click', () => {
+    canvas.style.display = 'block'
+    document.querySelector('#end-menu').style.display = 'none'
+    startGame()
+})
 
 
 
@@ -40,3 +45,10 @@ let myFinishline
 let myScore
 
 startGame()
+
+requestAnimationFrame(rotateObstacle)
+
+
+
+// **** MENUS HANDLERS **** //
+const endMenu = document.querySelector('#end-menu')

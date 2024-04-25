@@ -11,5 +11,250 @@ canvas {
     width: 100%;
   }
 }
+.board {
+  background-color: #312f32;
+  height: 700px;
+  width: 370px;
+  padding: 15px;
+  box-shadow: 20px 20px 60px #2a282b, -20px -20px 60px #38363a;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0;
+  display: none;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: -20px;
+  position: relative;
+  margin-top: 15px;
+  margin-bottom: 90px;
+}
+.title .text {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+}
+.title .letter {
+  height: fit-content;
+  font-size: 50px;
+  text-transform: uppercase;
+  color: #fcfcfc;
+}
+.title .overlap {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 45px;
+}
+.title .text-cir.l {
+  height: 40px;
+  width: 40px;
+  position: relative;
+  border-radius: 100%;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  animation: left 3s infinite linear;
+}
+@keyframes right {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes left {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+.title .text-cir.l .quarter {
+  height: 100%;
+  width: 100%;
+}
+.title .text-cir.l .q1 {
+  background-color: #f4eb43;
+}
+.title .text-cir.l .q2 {
+  background-color: #7233cf;
+}
+.title .text-cir.l .q3 {
+  background-color: #35e2eb;
+}
+.title .text-cir.l .q4 {
+  background-color: #fc0083;
+}
+.title .text-cir.l .inner-cir {
+  height: 30px;
+  width: 30px;
+  background-color: #312f32;
+  border-radius: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.title .text-cir.r {
+  height: 40px;
+  width: 40px;
+  position: relative;
+  border-radius: 100%;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  animation: right 3s infinite linear;
+}
+@keyframes right {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes left {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+.title .text-cir.r .quarter {
+  height: 100%;
+  width: 100%;
+}
+.title .text-cir.r .q1 {
+  background-color: #f4eb43;
+}
+.title .text-cir.r .q2 {
+  background-color: #7233cf;
+}
+.title .text-cir.r .q3 {
+  background-color: #35e2eb;
+}
+.title .text-cir.r .q4 {
+  background-color: #fc0083;
+}
+.title .text-cir.r .inner-cir {
+  height: 30px;
+  width: 30px;
+  background-color: #312f32;
+  border-radius: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.score-box {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  color: #fcfcfc;
+  margin-bottom: 7px;
+}
+.score-box .text {
+  margin-bottom: 7px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: #676467;
+}
+.score-box .text.best {
+  background-color: #f39734;
+}
+.score-box .score {
+  font-weight: 500;
+}
+
+.buttons {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.buttons .stars-box {
+  align-self: flex-start;
+  margin-left: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.buttons .stars-box .number {
+  font-size: 2rem;
+  color: #f3e775;
+}
+.buttons .play-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 44px;
+  width: 44px;
+  margin: 10px;
+  border: none;
+  border-radius: 100%;
+  background-color: #676467;
+  cursor: pointer;
+  scale: 1;
+  transition: scale 0.2s ease;
+  height: 90px;
+  width: 90px;
+}
+.buttons .play-btn svg {
+  fill: #afafaf;
+  transition: fill 0.2s ease;
+}
+.buttons .play-btn:hover {
+  scale: 1.1;
+}
+.buttons .play-btn:hover svg {
+  fill: #fcfcfc;
+}
+.buttons .play-btn svg {
+  transform: scale(2);
+}
+
+.back-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 44px;
+  width: 44px;
+  margin: 10px;
+  border: none;
+  border-radius: 100%;
+  background-color: #676467;
+  cursor: pointer;
+  scale: 1;
+  transition: scale 0.2s ease;
+  position: absolute;
+  top: 0;
+  left: 10px;
+}
+.back-btn svg {
+  fill: #afafaf;
+  transition: fill 0.2s ease;
+}
+.back-btn:hover {
+  scale: 1.1;
+}
+.back-btn:hover svg {
+  fill: #fcfcfc;
+}
 
 /*# sourceMappingURL=play.css.map */

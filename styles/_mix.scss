@@ -1,0 +1,158 @@
+@use 'var';
+
+@mixin circle($diameter, $inner-diameter, $direction, $spin-speed) {
+    @keyframes right {
+        from {transform: rotate(0deg);}
+        to {transform: rotate(360deg);}
+    }
+
+    @keyframes left {
+        from {transform: rotate(360deg);}
+        to {transform: rotate(0deg);}
+    }
+
+    height: $diameter;
+    width: $diameter;
+    position: relative;
+    border-radius: 100%;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    animation: $direction $spin-speed infinite linear;
+
+    .quarter {
+        height: 100%;
+        width: 100%;
+    }
+
+    .q1 {
+        background-color: var.$yellow;
+    }
+
+    .q2 {
+        background-color: var.$violet;
+    }
+
+    .q3 {
+        background-color: var.$cian;
+    }
+
+    .q4 {
+        background-color: var.$red;
+    }
+
+    .inner-cir {
+        height: $inner-diameter;
+        width: $inner-diameter;
+        background-color: var.$bg;
+        border-radius: 100%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+@mixin board() {
+    background-color: var.$bg;
+    height: var.$height;
+    width: var.$width;
+    padding: 15px;
+    box-shadow:  20px 20px 60px #2a282b, -20px -20px 60px #38363a;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+@mixin title() {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: -20px;
+    position: relative;
+
+    .text {
+        display: flex;
+        gap: 2px;
+        align-items: center;
+    }
+
+    .letter {
+        height: fit-content;
+        font-size: 50px;
+        text-transform: uppercase;
+        color: var.$white
+    }
+
+    .overlap {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 45px
+    }
+
+    .text-cir.l {
+        @include circle(40px, 30px, left, 3s);
+    }
+    
+    .text-cir.r {
+        @include circle(40px, 30px, right, 3s);
+    }
+}
+
+@mixin play-btn {
+    height: 115px;
+    width: 115px;
+    border-radius: 100%;
+    position: absolute;
+    left: calc(50% - (115px / 2) + 58px);
+    top: calc(50% - (115px / 2));
+    transform: translateX(-50%);
+    z-index: 4;
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    svg {
+        fill: var.$detail-2;
+        scale: 1;
+        transition: scale .2s ease;
+    }
+
+    &:hover {
+        svg {
+            scale: 1.2;
+        }
+    }
+}
+
+@mixin btn() {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 44px;
+    width: 44px;
+    margin: 10px;
+    border: none;
+    border-radius: 100%;
+    background-color: var.$detail-1;
+    cursor: pointer;
+    scale: 1;
+    transition: scale .2s ease;
+
+    svg {
+        fill: var.$detail-2;
+        transition: fill .2s ease;
+    }
+
+    &:hover {
+        scale: 1.1;
+
+        svg {
+            fill: var.$white;
+        }
+    }
+}

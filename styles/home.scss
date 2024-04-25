@@ -1,15 +1,8 @@
 @use 'var';
-@use 'circle';
+@use 'mix';
 
 .board {
-    background-color: var.$bg;
-    height: var.$height;
-    width: var.$width;
-    padding: 15px;
-    box-shadow:  20px 20px 60px #2a282b, -20px -20px 60px #38363a;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    @include mix.board()
 }
 
 @media (max-width: 450px) {
@@ -20,45 +13,13 @@
 }
 
 .title {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: -20px;
-    position: relative;
-
-    .text {
-        display: flex;
-        gap: 2px;
-        align-items: center;
-    }
-
-    .letter {
-        height: fit-content;
-        font-size: 50px;
-        text-transform: uppercase;
-        color: var.$white
-    }
-
-    .overlap {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        top: 45px
-    }
-
-    .text-cir.l {
-        @include circle.circle(40px, 30px, left, 3s);
-    }
-    
-    .text-cir.r {
-        @include circle.circle(40px, 30px, right, 3s);
-    }
+    @include mix.title()
 }
 
 .play {
 
     .c1 {
-        @include circle.circle(235px, 200px, left, 3s);;
+        @include mix.circle(235px, 200px, left, 3s);;
         z-index: 1;
         left: calc(50% - (235px / 2));
         top: calc(50% - (235px / 2));
@@ -67,7 +28,7 @@
     }
 
     .c2 {
-        @include circle.circle(190px, 160px, right, 3s);
+        @include mix.circle(190px, 160px, right, 3s);
         z-index: 2;
         left: calc(50% - (235px / 2) + 22px);
         top: calc(50% - (235px / 2) + 22px);
@@ -75,7 +36,7 @@
     }
 
     .c3 {
-        @include circle.circle(150px, 125px, left, 3s);
+        @include mix.circle(150px, 125px, left, 3s);
         z-index: 3;
         left: calc(50% - (235px / 2) + 42px);
         top: calc(50% - (235px / 2) + 42px);
@@ -88,31 +49,7 @@
     }
 
     .play-btn {
-        height: 115px;
-        width: 115px;
-        border-radius: 100%;
-        position: absolute;
-        left: calc(50% - (115px / 2) + 58px);
-        top: calc(50% - (115px / 2));
-        transform: translateX(-50%);
-        z-index: 4;
-        cursor: pointer;
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        svg {
-            fill: var.$detail-2;
-            scale: 1;
-            transition: scale .2s ease;
-        }
-
-        &:hover {
-            svg {
-                scale: 1.2;
-            }
-        }
+        @include mix.play-btn()
     }
 }
 
@@ -121,31 +58,7 @@
     justify-content: space-between;
 
     .btn {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 44px;
-        width: 44px;
-        margin: 10px;
-        border: none;
-        border-radius: 100%;
-        background-color: var.$detail-1;
-        cursor: pointer;
-        scale: 1;
-        transition: scale .2s ease;
-
-        svg {
-            fill: var.$detail-2;
-            transition: fill .2s ease;
-        }
-
-        &:hover {
-            scale: 1.1;
-
-            svg {
-                fill: var.$white;
-            }
-        }
+        @include mix.btn()
     }
 }
 

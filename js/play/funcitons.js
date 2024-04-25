@@ -52,7 +52,8 @@ function pauseGame() {
 }
 
 function endGame() {
-    startGame()
+    canvas.style.display = 'none'
+    document.querySelector('#end-menu').style.display = 'flex'
 }
 
 
@@ -109,8 +110,6 @@ function rotateObstacle() {
     myObstacle.currentAngle += myObstacle.rotationSpeed
     rotationAnimationFrame = requestAnimationFrame(rotateObstacle)
 }
-
-requestAnimationFrame(rotateObstacle)
 
 
 
@@ -186,7 +185,7 @@ function handleObsColition(ball, obs) {
     if (checkCirColition(ball, obs) && getDistance(ball, obs) > (obs.radius - obs.width + ball.radius)) {
         // Controlando que color hizo colicion
         if (!(getColorColition(ball, obs) === ball.color)) {
-            startGame()
+            endGame()
         }
     }
 }

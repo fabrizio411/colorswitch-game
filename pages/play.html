@@ -10,7 +10,55 @@
 <body>
 
   <canvas id="canvas"></canvas>
-  <button style="position: absolute; top: 10px; left: 10px; z-index: 10;" onclick="pauseGame()">Pausa</button>
+  <button style=" top: 10px; left: 10px; z-index: 10;" onclick="pauseGame()">Pausa</button>
+
+
+  <div class="board" id="end-menu">
+    <div class="title">
+      <div class="title">
+        <div class="text">
+          <p class="letter">C</p>
+          <div class="text-cir l">
+            <div class="quarter q1"></div>
+            <div class="quarter q2"></div>
+            <div class="quarter q3"></div>
+            <div class="quarter q4"></div>
+            <div class="inner-cir"></div>
+          </div>
+          <p class="letter">L</p>
+          <div class="text-cir r">
+            <div class="quarter q1"></div>
+            <div class="quarter q2"></div>
+            <div class="quarter q3"></div>
+            <div class="quarter q4"></div>
+            <div class="inner-cir"></div>
+          </div>
+          <p class="letter">R</p>
+        </div>
+        <h1 class="letter overlap">IfElse</h1>
+    </div>
+
+    <div class="score-box">
+      <p class="text">Score</p>
+      <p class="score">3</p>
+    </div>
+    <div class="score-box">
+      <p class="text best">Best Score</p>
+      <p class="score">15</p>
+    </div>
+
+    <div class="buttons">
+      <div class="stars-box">
+        <p>Stars</p>
+        <p class="number">100</p>
+      </div>
+      <p class="play-btn" id="restart-btn">
+        <svg height="32px" style="enable-background:new 0 0 32 32;" version="1.1" viewBox="0 0 32 32" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28,16c-1.219,0-1.797,0.859-2,1.766C25.269,21.03,22.167,26,16,26c-5.523,0-10-4.478-10-10S10.477,6,16,6  c2.24,0,4.295,0.753,5.96,2H20c-1.104,0-2,0.896-2,2s0.896,2,2,2h6c1.104,0,2-0.896,2-2V4c0-1.104-0.896-2-2-2s-2,0.896-2,2v0.518  C21.733,2.932,18.977,2,16,2C8.268,2,2,8.268,2,16s6.268,14,14,14c9.979,0,14-9.5,14-11.875C30,16.672,28.938,16,28,16z"/></svg>
+      </p>
+    </div>
+
+    <a class="back-btn" href="../index.html">back</a>
+  </div>
   
 </body>
 <script src="../js/play/constants.js"></script>
