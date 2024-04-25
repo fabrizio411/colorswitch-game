@@ -62,9 +62,9 @@ function endGame() {
 
 // **** JUMP HANDLERS **** //
 function updateJump() {
+    isJumping = true
+
     if (!myBall.jumpDone) {
-        isJumping = true
-        jumpAnimationFrame = requestAnimationFrame(updateJump)
         context.clearRect(0, 0, canvasWidth, canvasHeight)
         myBall.jump(canvasHeight, countJumpFrame)
         handleObsColition(myBall, myObstacle)
@@ -73,10 +73,15 @@ function updateJump() {
         handleFinishColition(myBall, myFinishline)
         reDraw()
         countJumpFrame++
+        setTimeout(() => {
+            updateJump()
+        }, .1);
     } else {
-        cancelAnimationFrame(jumpAnimationFrame)
+        // cancelAnimationFrame(jumpAnimationFrame)
         myBall.jumpDone = false
         countJumpFrame = 0
+        isJumping = false
+        return
     }
 }
 function checkForJump() {
@@ -88,7 +93,8 @@ function checkForJump() {
     // Permite seguir saltando
     if (isJumping) {
         // Cnacela la animacion para empezar otra nueva
-        cancelAnimationFrame(jumpAnimationFrame)
+        // cancelAnimationFrame(jumpAnimationFrame)
+        myBall.jumpDone = true
         countJumpFrame = 0
         updateJump()
     } else {

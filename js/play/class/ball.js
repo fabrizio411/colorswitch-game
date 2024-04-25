@@ -4,8 +4,8 @@ class Ball {
         this.yPos = yPos
         this.radius = 10
         this.color = undefined
-        this.speed = 1.75
-        this.g = -3
+        this.speed = 2.2
+        this.g = -5.5
         this.jumpDone = false
     }
 
