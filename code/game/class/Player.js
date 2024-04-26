@@ -4,19 +4,18 @@ class Player {
     JUMP_SPEED = 1.7
     GRAVITY = -0.007
 
-    constructor(ctx, height, jumpHeight, scaleRatio) {
+    constructor(ctx, height, scaleRatio) {
         this.ctx = ctx
         this.canvas = ctx.canvas
         this.height = height
         this.width = this.height
-        this.jumpHeight = jumpHeight
         this.scaleRatio = scaleRatio
 
         this.x = (this.canvas.width / 2) - (this.width / 2 * scaleRatio)
         this.y = this.canvas.height - 75 * scaleRatio
 
         this.image = new Image()
-        this.image.src = '../../../imgs/player/p0.png'
+        this.image.src = '../../../imgs/player/p0.svg'
 
         /* LISTENERS */
         window.removeEventListener('click', () => this.checkJump())
@@ -24,8 +23,8 @@ class Player {
      
     }
 
-    update(frameDelta) {
-        this.jump(frameDelta)
+    update(frameDelta, background) {
+        this.jump(frameDelta, background)
         // if (this.jumpInProgress) {
         //     // Check colitions
         // }
@@ -39,11 +38,20 @@ class Player {
         }
     }
 
-    jump(frameDelta) {
+    jump(frameDelta, background) {
         if (this.jumpInProgress) {
+            let backgroundMoving = false
+
             let v = this.JUMP_SPEED + this.GRAVITY * (frameDelta * this.frameCount)
+            let temporalY = this.y - (v * this.JUMP_SPEED) * this.scaleRatio + (0.5 * this.GRAVITY * (frameDelta ** 2))
             
-            this.y -= (v * this.JUMP_SPEED) * this.scaleRatio + (0.5 * this.GRAVITY * (frameDelta ** 2))
+            if (this.y < this.canvas.height / 2) {
+                backgroundMoving = background.move(this.y - temporalY)
+            }
+
+            if (!backgroundMoving) {
+                this.y = temporalY
+            }
 
             if (this.y + this.height >= this.canvas.height) {
                 this.y = this.canvas.height - this.height

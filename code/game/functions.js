@@ -37,8 +37,7 @@ function createSprites() {
     // Crea todos los sprites
     // Teniendo en cuanta la escala de la screen
     const playerHeightInGame = PLAYER_HEIGHT * scaleRatio
-    const jumpHeightInGame = JUMP_HEIGHT * scaleRatio
 
-    player = new Player(ctx, playerHeightInGame, jumpHeightInGame, scaleRatio)
+    player = new Player(ctx, playerHeightInGame, scaleRatio)
     background = new Background(ctx, canvas.width, canvas.height, BACKGROUND_SPEED, scaleRatio)
 }

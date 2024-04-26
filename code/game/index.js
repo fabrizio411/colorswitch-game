@@ -6,7 +6,6 @@ const ctx = canvas.getContext('2d')
 /* DECLARACION DE CONSTANTES */
 const GAME_WIDTH = 370
 const GAME_HEIGHT = 700
-const JUMP_HEIGHT = 100
 const PLAYER_HEIGHT = 20
 const BACKGROUND_SPEED = 0.5
 
@@ -43,7 +42,7 @@ function gameLoop(currentTime) {
     clearScreen()
     // Update game objects
     background.update(GAME_SPEED, frameDelta)
-    player.update(frameDelta)
+    player.update(frameDelta, background)
 
     // Draw game objects
     background.draw()

@@ -7,8 +7,23 @@ class Background {
         this.speed = speed
         this.scaleRatio = scaleRatio
 
-        this.x = 0
+        this.x = (this.canvas.width / 2) - this.width / 2 * scaleRatio
         this.y = height
+    }
+
+    update(gameSpeed, frameDelta) {
+        // this.y += gameSpeed * frameDelta * this.speed * this.scaleRatio
+    }
+
+    move(dy) {
+        console.log(dy)
+
+        if (dy > 0) {
+            this.y += dy
+            return true
+        } else {
+            return false
+        }
     }
 
     draw() {
@@ -18,27 +33,23 @@ class Background {
 
         // this.ctx.fillStyle = '#312f32'
         this.ctx.fillStyle = 'red'
-        this.ctx.fillRect(this.x, newY , 50 * this.scaleRatio, rectHeight)
+        this.ctx.fillRect(this.x, newY , this.width * this.scaleRatio, rectHeight)
         this.ctx.fillStyle = 'blue'
-        this.ctx.fillRect(this.x, newY - rectHeight, 50 * this.scaleRatio, rectHeight)
+        this.ctx.fillRect(this.x, newY - rectHeight, this.width * this.scaleRatio, rectHeight)
         this.ctx.fillStyle = 'green'
-        this.ctx.fillRect(this.x, newY - rectHeight * 2, 50 * this.scaleRatio, rectHeight)
+        this.ctx.fillRect(this.x, newY - rectHeight * 2, this.width * this.scaleRatio, rectHeight)
 
         newY = this.y - rectHeight * 3
 
         this.ctx.fillStyle = 'red'
-        this.ctx.fillRect(this.x, newY, 50 * this.scaleRatio, rectHeight)
+        this.ctx.fillRect(this.x, newY, this.width * this.scaleRatio, rectHeight)
         this.ctx.fillStyle = 'blue'
-        this.ctx.fillRect(this.x, newY - rectHeight, 50 * this.scaleRatio, rectHeight)
+        this.ctx.fillRect(this.x, newY - rectHeight, this.width * this.scaleRatio, rectHeight)
         this.ctx.fillStyle = 'green'
-        this.ctx.fillRect(this.x, newY - rectHeight * 2, 50 * this.scaleRatio, rectHeight)
+        this.ctx.fillRect(this.x, newY - rectHeight * 2, this.width * this.scaleRatio, rectHeight)
 
         if (this.y > (this.height * 2 - rectHeight)) {
             this.y = this.height - rectHeight
         }
-    }
-
-    update(gameSpeed, frameDelta) {
-        // this.y += gameSpeed * frameDelta * this.speed * this.scaleRatio
     }
 }
