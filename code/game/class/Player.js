@@ -1,6 +1,5 @@
 class Player {
     frameCount = 0
-    jumpDone = true
     jumpInProgress = false
     JUMP_SPEED = 1.7
     GRAVITY = -0.007
@@ -17,7 +16,7 @@ class Player {
         this.y = this.canvas.height - 75 * scaleRatio
 
         this.image = new Image()
-        this.image.src = '../../../imgs/player/p0.svg'
+        this.image.src = '../../../imgs/player/p0.png'
 
         /* LISTENERS */
         window.removeEventListener('click', () => this.checkJump())
@@ -36,7 +35,6 @@ class Player {
         if (!this.jumpInProgress) {
             this.jumpInProgress = true
         } else {
-            this.jumpDone = true
             this.frameCount = 0
         }
     }
@@ -49,7 +47,6 @@ class Player {
 
             if (this.y + this.height >= this.canvas.height) {
                 this.y = this.canvas.height - this.height
-                this.jumpDone = true
             }
 
             this.frameCount++
