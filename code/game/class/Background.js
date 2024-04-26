@@ -39,6 +39,6 @@ class Background {
     }
 
     update(gameSpeed, frameDelta) {
-        this.y += gameSpeed * frameDelta * this.speed * this.scaleRatio
+        // this.y += gameSpeed * frameDelta * this.speed * this.scaleRatio
     }
 }
