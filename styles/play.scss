@@ -3,18 +3,8 @@
 
 canvas {
     background-color: var.$bg;
-    height: var.$height;
-    width: var.$width;
     box-shadow:  20px 20px 60px #2a282b, -20px -20px 60px #38363a;
 }
-
-@media (max-width: 450px) {
-    canvas {
-        height: 100%;
-        width: 100%;
-    }
-}
-
 
 .board {
     @include mix.board();

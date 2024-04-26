@@ -1,4 +1,46 @@
-// **** REDIBUJAR TODO **** //
+// **** CANVAS SIZE HANDLERS **** //
+function setScreen() {
+    scaleRatio = getScaleRatio()
+    canvas.width = CANVAS_WIDTH * scaleRatio
+    canvas.height = CANVAS_HEIGHT * scaleRatio
+    
+    if (xPosMiddle) {
+        xPosMiddle = canvas.width / 2
+        reDraw()
+    } else {
+        xPosMiddle = canvas.width / 2
+    }
+    
+}
+
+
+function getScaleRatio() {
+    const screenHeight = Math.min(
+        window.innerHeight,
+        document.documentElement.clientHeight
+    )
+
+    const screenWidth = Math.min(
+        window.innerWidth,
+        document.documentElement.clientWidth
+    )
+
+    if (screenWidth / screenHeight < CANVAS_WIDTH / CANVAS_HEIGHT) {
+        return screenWidth / CANVAS_WIDTH
+    } else {
+        return screenHeight / CANVAS_HEIGHT
+    }
+}
+
+
+
+
+
+// **** RESET FUNCTIONS **** //
+function clearScreen() {
+    context.clearRect(0, 0, canvas.width, canvas.height)
+}
+
 function reDraw() {
     myFinishline.draw(context)
     myScore.draw(context)
@@ -18,7 +60,7 @@ function startGame() {
     if (jumpAnimationFrame) {
         cancelAnimationFrame(jumpAnimationFrame)
     }
-    myBall = new Ball(xPosMiddle, canvasHeight - 50, 'white')
+    myBall = new Ball(xPosMiddle, CANVAS_HEIGHT - 50, 'white')
     myBall.draw(context)
     countJumpFrame = 0
     isJumping = false
@@ -26,10 +68,10 @@ function startGame() {
     myObstacle = new Obstacle(xPosMiddle, 300, 100, 0.01, 15)
     currentAngle = 0
 
-    myColorChanger = new ColorChanger(xPosMiddle, canvasHeight - 175)
+    myColorChanger = new ColorChanger(xPosMiddle, CANVAS_HEIGHT - 175)
     myColorChanger.draw(context)
 
-    myFinishline = new Finishline(xPosMiddle, 60, canvasWidth)
+    myFinishline = new Finishline(xPosMiddle, 60, CANVAS_WIDTH)
     myFinishline.draw(context)
 
     myScore = new Score()
@@ -65,8 +107,8 @@ function updateJump() {
     isJumping = true
 
     if (!myBall.jumpDone) {
-        context.clearRect(0, 0, canvasWidth, canvasHeight)
-        myBall.jump(canvasHeight, countJumpFrame)
+        context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
+        myBall.jump(CANVAS_HEIGHT, countJumpFrame)
         handleObsColition(myBall, myObstacle)
         handleChangerColition(myBall, myColorChanger)
         handleStarColition(myBall, myStar, myScore)
@@ -111,7 +153,7 @@ function rotateObstacle() {
     if (myObstacle.currentAngle >= Math.PI * 2) {
         myObstacle.currentAngle = 0
     }
-    context.clearRect(0, 0, canvasWidth, canvasHeight)
+    context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
     reDraw()
     myObstacle.currentAngle += myObstacle.rotationSpeed
     rotationAnimationFrame = requestAnimationFrame(rotateObstacle)

@@ -1,16 +1,8 @@
 canvas {
   background-color: #312f32;
-  height: 700px;
-  width: 370px;
   box-shadow: 20px 20px 60px #2a282b, -20px -20px 60px #38363a;
 }
 
-@media (max-width: 450px) {
-  canvas {
-    height: 100%;
-    width: 100%;
-  }
-}
 .board {
   background-color: #312f32;
   height: 700px;

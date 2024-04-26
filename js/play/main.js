@@ -1,31 +1,20 @@
 // **** CANVAS SETUP **** //
 const canvas = document.querySelector('#canvas')
 
-let canvasWidth = 370
-let canvasHeight = 700
-if (window.innerWidth < 450) {
-    canvasWidth = window.innerWidth
-    canvasHeight = window.innerHeight
-}
-
-canvas.height = canvasHeight
-canvas.width = canvasWidth
+const CANVAS_WIDTH = 370
+const CANVAS_HEIGHT = 700
 
 let context = canvas.getContext('2d')
 
-const xPosMiddle = canvasWidth / 2
 
 
+//  **** SCREEN SETUP **** //
+let scaleRatio
+let xPosMiddle
 
+setScreen()
+window.addEventListener('resize', setScreen)
 
-
-// **** LISTENERS **** //
-canvas.addEventListener('click', checkForJump)
-document.querySelector('#restart-btn').addEventListener('click', () => {
-    canvas.style.display = 'block'
-    document.querySelector('#end-menu').style.display = 'none'
-    startGame()
-})
 
 
 
@@ -46,9 +35,20 @@ let myScore
 
 startGame()
 
+
+
 requestAnimationFrame(rotateObstacle)
 
 
 
-// **** MENUS HANDLERS **** //
-const endMenu = document.querySelector('#end-menu')
+
+
+
+
+// **** LISTENERS **** //
+canvas.addEventListener('click', checkForJump)
+document.querySelector('#restart-btn').addEventListener('click', () => {
+    canvas.style.display = 'block'
+    document.querySelector('#end-menu').style.display = 'none'
+    startGame()
+})
