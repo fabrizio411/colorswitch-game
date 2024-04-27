@@ -23,8 +23,8 @@ class Player {
      
     }
 
-    update(frameDelta, background) {
-        this.jump(frameDelta, background)
+    update(frameDelta, background, obsController) {
+        this.jump(frameDelta, background, obsController)
         // if (this.jumpInProgress) {
         //     // Check colitions
         // }
@@ -38,21 +38,26 @@ class Player {
         }
     }
 
-    jump(frameDelta, background) {
+    jump(frameDelta, bgMove) {
         if (this.jumpInProgress) {
             let backgroundMoving = false
 
+            // Calculo de la velocidad y la posicion
             let v = this.JUMP_SPEED + this.GRAVITY * (frameDelta * this.frameCount)
             let temporalY = this.y - (v * this.JUMP_SPEED) * this.scaleRatio + (0.5 * this.GRAVITY * (frameDelta ** 2))
             
+            // Handler del movimiento del background
             if (this.y < this.canvas.height / 2) {
-                backgroundMoving = background.move(this.y - temporalY)
+                let dy = this.y - temporalY
+                backgroundMoving = bgMove(dy)
             }
 
+            // Movimiento del player
             if (!backgroundMoving) {
                 this.y = temporalY
             }
 
+            // Limite de caida del player
             if (this.y + this.height >= this.canvas.height) {
                 this.y = this.canvas.height - this.height
             }

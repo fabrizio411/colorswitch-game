@@ -7,10 +7,12 @@ const ctx = canvas.getContext('2d')
 const GAME_WIDTH = 370
 const GAME_HEIGHT = 700
 const PLAYER_HEIGHT = 20
-const BACKGROUND_SPEED = 0.5
-
-
-const GAME_SPEED = 0.75
+const OBSTACLE_CONFIG = [
+    { radius: 60, rotationSpeed: 0.001, lineWidth: 10 },
+    { radius: 100, rotationSpeed: 0.00075, lineWidth: 10 },
+    { radius: 150, rotationSpeed: 0.0001, lineWidth: 20 }
+]
+const COLORS = ['#fc0083','#35e2eb','#f4eb43','#7233cf']
 
 
 /* DECLARACION DE VARIABLES */ 
@@ -18,6 +20,7 @@ let scaleRatio = null
 let previousTime = null
 let player = null
 let background = null
+let obsController = null
 
 
 /* SCREEN Y DIMENSIONES */
@@ -41,11 +44,12 @@ function gameLoop(currentTime) {
 
     clearScreen()
     // Update game objects
-    background.update(GAME_SPEED, frameDelta)
-    player.update(frameDelta, background)
+    player.update(frameDelta, bgMove)
+    obsController.update(frameDelta, background.y)
 
     // Draw game objects
-    background.draw()
+    // background.draw()
+    obsController.draw()
     player.draw()
 
     requestAnimationFrame(gameLoop)
