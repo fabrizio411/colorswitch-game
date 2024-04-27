@@ -12,32 +12,26 @@ class ObsController {
     }
 
     update(frameDelta) {
-        // Hace el update de cada obstaculo
+        // Hace el update de cada obstaculo (rotacion)
         this.obstacles.forEach(obs => obs.update(frameDelta));
-        // TODO 1: hacer que el ciruclo se mueva con el backgrounds
     }
 
     move(dy) {
         // Handler del movimiento d los obstaculos con el fondo
         this.obstacles.forEach(obs => obs.move(dy))
-        // if (dy > 0) {
-        //     return true
-        // } else {
-        //     return false
-        // }
     }
 
     createObstacle(y) {
         // Generar obstaculos y guardarlos en this.obstacles
-        if (this.obstacles.length < 1) {
+        if (this.obstacles.length < 4) {
             const index = this.getRandomNumber(0, this.obsArray.length - 1)
             // Se selecciona un obstaculo aleatorio
-            const obsInfo = this.obsArray[0] // TODO 3: Hacer aleatorio (cuidado con rezise de pantalla)
+            const obsInfo = this.obsArray[0] // TODO 2: Hacer aleatorio (cuidado con rezise de pantalla)
             const x = this.canvas.width / 2
             const obstacle = new Obstacle(
                 this.ctx, 
                 x, 
-                y * this.scaleRatio, 
+                y, 
                 obsInfo.radius, 
                 obsInfo.lineWidth, 
                 obsInfo.rotationSpeed, 
@@ -50,12 +44,13 @@ class ObsController {
     }
 
     draw() {
-        let firstY = this.canvas.height / 2 - 50
-        // let prevRadius = 0
-        // this.obstacles.forEach(obs => {
-        //     firstY -= this.OBSTACLE_INTERVAL + prevRadius + obs.radius
-        //     prevRadius = obs.radius
-        // })
+        // TODO 1: Terminar generar varios circulos con distancia constante
+        let firstY = this.canvas.height / 2 - 50 * this.scaleRatio
+        let prevRadius = 0
+        this.obstacles.forEach(obs => {
+            firstY -= this.OBSTACLE_INTERVAL * this.scaleRatio + prevRadius + obs.radius
+            prevRadius = obs.radius
+        })
         this.createObstacle(firstY)
         this.obstacles.forEach(obs => obs.draw());
     }

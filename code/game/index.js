@@ -8,9 +8,9 @@ const GAME_WIDTH = 370
 const GAME_HEIGHT = 700
 const PLAYER_HEIGHT = 20
 const OBSTACLE_CONFIG = [
-    { radius: 60, rotationSpeed: 0.001, lineWidth: 10 },
-    { radius: 100, rotationSpeed: 0.00075, lineWidth: 10 },
-    { radius: 150, rotationSpeed: 0.0001, lineWidth: 20 }
+    { radius: 60, rotationSpeed: 1, lineWidth: 10 },
+    { radius: 100, rotationSpeed: 1.5, lineWidth: 10 },
+    { radius: 150, rotationSpeed: 2, lineWidth: 20 }
 ]
 const COLORS = ['#fc0083','#35e2eb','#f4eb43','#7233cf']
 
@@ -39,7 +39,7 @@ function gameLoop(currentTime) {
         return
     }
 
-    const frameDelta = currentTime - previousTime
+    const frameDelta = (currentTime - previousTime) / 1000
     previousTime = currentTime
 
     clearScreen()

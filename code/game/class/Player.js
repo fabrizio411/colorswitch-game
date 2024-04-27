@@ -1,8 +1,8 @@
 class Player {
-    frameCount = 0
     jumpInProgress = false
-    JUMP_SPEED = 1.7
-    GRAVITY = -0.007
+    JUMP_SPEED = 400
+    GRAVITY = -1600
+    speed = this.JUMP_SPEED
 
     constructor(ctx, height, scaleRatio) {
         this.ctx = ctx
@@ -34,7 +34,7 @@ class Player {
         if (!this.jumpInProgress) {
             this.jumpInProgress = true
         } else {
-            this.frameCount = 0
+            this.speed = this.JUMP_SPEED
         }
     }
 
@@ -42,10 +42,10 @@ class Player {
         if (this.jumpInProgress) {
             let backgroundMoving = false
 
-            // Calculo de la velocidad y la posicion
-            let v = this.JUMP_SPEED + this.GRAVITY * (frameDelta * this.frameCount)
-            let temporalY = this.y - (v * this.JUMP_SPEED) * this.scaleRatio + (0.5 * this.GRAVITY * (frameDelta ** 2))
-            
+            // Calculo de la posicion
+            this.speed += this.GRAVITY * frameDelta
+            let temporalY = this.y - this.speed * frameDelta * this.scaleRatio
+
             // Handler del movimiento del background
             if (this.y < this.canvas.height / 2) {
                 let dy = this.y - temporalY
@@ -58,11 +58,9 @@ class Player {
             }
 
             // Limite de caida del player
-            if (this.y + this.height >= this.canvas.height) {
+            if ((this.y + this.height) >= this.canvas.height) {
                 this.y = this.canvas.height - this.height
             }
-
-            this.frameCount++
         }
     }
 
