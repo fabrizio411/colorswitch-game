@@ -23,7 +23,7 @@ class ObsController {
 
     createObstacle(y) {
         // Generar obstaculos y guardarlos en this.obstacles
-        if (this.obstacles.length < 4) {
+        if (this.obstacles.length < 1) {
             const index = this.getRandomNumber(0, this.obsArray.length - 1)
             // Se selecciona un obstaculo aleatorio
             const obsInfo = this.obsArray[0] // TODO 2: Hacer aleatorio (cuidado con rezise de pantalla)

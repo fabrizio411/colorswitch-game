@@ -9,8 +9,8 @@ const GAME_HEIGHT = 700
 const PLAYER_HEIGHT = 20
 const OBSTACLE_CONFIG = [
     { radius: 60, rotationSpeed: 1, lineWidth: 10 },
-    { radius: 100, rotationSpeed: 1.5, lineWidth: 10 },
-    { radius: 150, rotationSpeed: 2, lineWidth: 20 }
+    { radius: 100, rotationSpeed: 2, lineWidth: 10 },
+    { radius: 150, rotationSpeed: 3, lineWidth: 20 }
 ]
 const COLORS = ['#fc0083','#35e2eb','#f4eb43','#7233cf']
 
@@ -45,10 +45,9 @@ function gameLoop(currentTime) {
     clearScreen()
     // Update game objects
     player.update(frameDelta, bgMove)
-    obsController.update(frameDelta, background.y)
+    obsController.update(frameDelta)
 
     // Draw game objects
-    // background.draw()
     obsController.draw()
     player.draw()
 

@@ -36,9 +36,7 @@ function createSprites() {
     // Crea todos los sprites
     // Teniendo en cuanta la escala de la screen
     const playerHeightInGame = PLAYER_HEIGHT * scaleRatio
-
     player = new Player(ctx, playerHeightInGame, scaleRatio)
-    background = new Background(ctx)
 
     // Valores InGame escalados de los obstaculos
     const obstacles = OBSTACLE_CONFIG.map(obs => {
@@ -55,7 +53,6 @@ function createSprites() {
 /* BACKGROUND MOVEMENT */
 function bgMove(dy) {
     if (dy > 0) {
-        // background.move(dy)
         obsController.move(dy)
         return true
     } else {
