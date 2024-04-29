@@ -12,10 +12,13 @@ const OBSTACLE_CONFIG = [
     { radius: 100, rotationSpeed: 2, lineWidth: 10 },
     { radius: 150, rotationSpeed: 3, lineWidth: 20 }
 ]
+// Red - Cian - Yellow - Violet
 const COLORS = ['#fc0083','#35e2eb','#f4eb43','#7233cf']
 
 
 /* DECLARACION DE VARIABLES */ 
+let obstaclesMemory = []
+let playerColorMemory = null
 let scaleRatio = null
 let previousTime = null
 let player = null

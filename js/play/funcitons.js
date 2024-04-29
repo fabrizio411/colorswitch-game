@@ -165,7 +165,6 @@ function rotateObstacle() {
 
 // **** COLICIONES **** //
 function getDistance(ball, obs) {
-    // let result = Math.sqrt(Math.pow(obs.xPos - ball.xPos, 2) + Math.pow(obs.yPos - ball.yPos, 2))
     let result = Math.abs(ball.yPos - obs.yPos)
     return result
 }

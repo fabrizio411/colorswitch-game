@@ -28,13 +28,11 @@ class ObsController {
         if (this.obstacles.length < this.MAX_OBSTALCES) {
             const index = this.getRandomNumber(0, this.obsArray.length - 1)
             // Se selecciona un obstaculo aleatorio
-            let obsInfo
+            let obsInfo = null
             /////////////////////////////////////////
-            //// GLOBAL VARIABLE USAGE (WARNING)
-            console.log(obstaclesMemory)
+            //// GLOBAL VARIABLE USAGE (WARNING) ////
             if (obstaclesMemory.length === this.MAX_OBSTALCES) {
                 obsInfo = this.obsArray[obstaclesMemory[this.obstacles.length]]
-                console.log(this.obsArray[obstaclesMemory[this.obstacles.length]])
             } else {
                 obsInfo = this.obsArray[index] // TODO 1: (cuidado con rezise de pantalla)
                 obstaclesMemory.push(index)
@@ -109,8 +107,8 @@ class Obstacle {
     draw() {
         // Dibujar 4 cuartos de circulo de cada color para formar el obstaculo
         for (let i = 1; i <= 4; i++) {
-            let arcStart
-            let arcEnd
+            let arcStart = null
+            let arcEnd = null
     
             if (i === 1) {
                 arcStart = 0

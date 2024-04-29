@@ -36,7 +36,15 @@ function createSprites() {
     // Crea todos los sprites
     // Teniendo en cuanta la escala de la screen
     const playerHeightInGame = PLAYER_HEIGHT * scaleRatio
-    player = new Player(ctx, playerHeightInGame, scaleRatio)
+
+    let playerColor = null
+    if (playerColorMemory === null) {
+        playerColor = getRandomNumber(1, 4)
+    } else {
+        playerColor = playerColorMemory
+    }
+    
+    player = new Player(ctx, playerHeightInGame, scaleRatio, COLORS, playerColor)
 
     // Valores InGame escalados de los obstaculos
     const obstacles = OBSTACLE_CONFIG.map(obs => {
@@ -58,4 +66,10 @@ function bgMove(dy) {
     } else {
         return false
     }
+}
+
+/* UTILS */
+function getRandomNumber(min, max) {
+    // Obtiene un numero random entre el minimo y el maximo
+    return Math.floor(Math.random() * (max - min + 1) + min)
 }
