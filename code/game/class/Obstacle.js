@@ -10,6 +10,7 @@ class ObsController {
         this.obsArray = obsArray
         this.scaleRatio = scaleRatio
         this.colors = colors
+        
     }
 
     update(frameDelta) {
@@ -27,7 +28,19 @@ class ObsController {
         if (this.obstacles.length < this.MAX_OBSTALCES) {
             const index = this.getRandomNumber(0, this.obsArray.length - 1)
             // Se selecciona un obstaculo aleatorio
-            const obsInfo = this.obsArray[index] // TODO 2: Hacer aleatorio (cuidado con rezise de pantalla)
+            let obsInfo
+            /////////////////////////////////////////
+            //// GLOBAL VARIABLE USAGE (WARNING)
+            console.log(obstaclesMemory)
+            if (obstaclesMemory.length === this.MAX_OBSTALCES) {
+                obsInfo = this.obsArray[obstaclesMemory[this.obstacles.length]]
+                console.log(this.obsArray[obstaclesMemory[this.obstacles.length]])
+            } else {
+                obsInfo = this.obsArray[index] // TODO 1: (cuidado con rezise de pantalla)
+                obstaclesMemory.push(index)
+            }
+            /////////////////////////////////////////
+            /////////////////////////////////////////
             const x = this.canvas.width / 2
             const height = obsInfo.radius * 2 + obsInfo.lineWidth + this.OBSTACLE_INTERVAL * this.scaleRatio
 
@@ -55,7 +68,6 @@ class ObsController {
     }
 
     draw() {
-        // TODO 1: Terminar generar varios circulos con distancia constante
         this.createObstacle()
         this.obstacles.forEach(obs => obs.draw());
     }
