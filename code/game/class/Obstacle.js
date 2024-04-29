@@ -1,5 +1,6 @@
 class ObsController {
     OBSTACLE_INTERVAL = 100
+    MAX_OBSTALCES = 6
 
     obstacles = []
 
@@ -21,17 +22,27 @@ class ObsController {
         this.obstacles.forEach(obs => obs.move(dy))
     }
 
-    createObstacle(y) {
+    createObstacle() {
         // Generar obstaculos y guardarlos en this.obstacles
-        if (this.obstacles.length < 1) {
+        if (this.obstacles.length < this.MAX_OBSTALCES) {
             const index = this.getRandomNumber(0, this.obsArray.length - 1)
             // Se selecciona un obstaculo aleatorio
-            const obsInfo = this.obsArray[0] // TODO 2: Hacer aleatorio (cuidado con rezise de pantalla)
+            const obsInfo = this.obsArray[index] // TODO 2: Hacer aleatorio (cuidado con rezise de pantalla)
             const x = this.canvas.width / 2
+            const height = obsInfo.radius * 2 + obsInfo.lineWidth + this.OBSTACLE_INTERVAL * this.scaleRatio
+
+            let y = this.canvas.height / 2 - 50 * this.scaleRatio
+            let dy = 0
+            for (let i = 0; i < this.obstacles.length; i++) {
+                dy += this.obstacles[i].height
+            }
+            y -= dy + obsInfo.radius
+
             const obstacle = new Obstacle(
                 this.ctx, 
                 x, 
                 y, 
+                height,
                 obsInfo.radius, 
                 obsInfo.lineWidth, 
                 obsInfo.rotationSpeed, 
@@ -45,13 +56,7 @@ class ObsController {
 
     draw() {
         // TODO 1: Terminar generar varios circulos con distancia constante
-        let firstY = this.canvas.height / 2 - 50 * this.scaleRatio
-        let prevRadius = 0
-        this.obstacles.forEach(obs => {
-            firstY -= this.OBSTACLE_INTERVAL * this.scaleRatio + prevRadius + obs.radius
-            prevRadius = obs.radius
-        })
-        this.createObstacle(firstY)
+        this.createObstacle()
         this.obstacles.forEach(obs => obs.draw());
     }
 
@@ -64,10 +69,11 @@ class ObsController {
 class Obstacle {
     currentAngle = 0
 
-    constructor(ctx, x, y, radius, lineWidth, rotationSpeed, scaleRatio, colors) {
+    constructor(ctx, x, y, height, radius, lineWidth, rotationSpeed, scaleRatio, colors) {
         this.ctx = ctx
         this.x = x
         this.y = y
+        this.height = height
         this.radius = radius
         this.lineWidth = lineWidth
         this.rotationSpeed = rotationSpeed
