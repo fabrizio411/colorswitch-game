@@ -35,16 +35,16 @@ function clearScreen() {
 function createSprites() {
     // Crea todos los sprites
     // Teniendo en cuanta la escala de la screen
-    const playerHeightInGame = PLAYER_HEIGHT * scaleRatio
+    const playerRadiusInGame = PLAYER_RADIUS * scaleRatio
 
     let playerColor = null
     if (playerColorMemory === null) {
-        playerColor = getRandomNumber(1, 4)
+        playerColor = getRandomNumber(0, 3)
     } else {
         playerColor = playerColorMemory
     }
     
-    player = new Player(ctx, playerHeightInGame, scaleRatio, COLORS, playerColor)
+    player = new Player(ctx, playerRadiusInGame, scaleRatio, COLORS, playerColor)
 
     // Valores InGame escalados de los obstaculos
     const obstacles = OBSTACLE_CONFIG.map(obs => {

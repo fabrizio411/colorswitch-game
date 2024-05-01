@@ -5,20 +5,17 @@ class Player {
     speed = this.JUMP_SPEED
 
 
-    constructor(ctx, height, scaleRatio, colors, playerColor) {
+    constructor(ctx, radius, scaleRatio, colors, playerColor) {
         this.ctx = ctx
         this.canvas = ctx.canvas
-        this.height = height
-        this.width = this.height
+        this.radius = radius
         this.scaleRatio = scaleRatio
         this.colors = colors
-        this.playerColor = playerColor
+        this.colorIndex = playerColor
+        this.color = this.colors[this.colorIndex]
 
-        this.x = (this.canvas.width / 2) - (this.width / 2 * scaleRatio)
+        this.x = this.canvas.width / 2
         this.y = this.canvas.height - 75 * scaleRatio
-
-        this.image = new Image()
-        this.image.src = `../../../imgs/player/p0-${this.playerColor}.svg`
 
         /* LISTENERS */
         window.removeEventListener('click', () => this.checkJump())
@@ -29,7 +26,7 @@ class Player {
     update(frameDelta, background, obsController) {
         /////////////////////////////////////////
         //// GLOBAL VARIABLE USAGE (WARNING) ////
-        playerColorMemory = this.playerColor
+        playerColorMemory = this.colorIndex
         /////////////////////////////////////////
         /////////////////////////////////////////
         this.jump(frameDelta, background, obsController)
@@ -73,13 +70,18 @@ class Player {
     }
 
     draw() {
-        // this.ctx.filter = `drow-shadow(0 0 0 ${this.playerColor})`
-        this.ctx.drawImage(this.image, this.x, this.y, this.width, this.height)
-
-    }
-
-    getPlayerColor() {
-        return this.colors[this.playerColor - 1]
+        this.ctx.beginPath()
+        this.ctx.fillStyle = this.color
+        this.ctx.arc(
+            this.x,
+            this.y,
+            this.radius,
+            0,
+            Math.PI * 2,
+            false
+        )
+        this.ctx.fill()
+        this.ctx.closePath()
     }
 
     getRandomNumber(min, max) {
