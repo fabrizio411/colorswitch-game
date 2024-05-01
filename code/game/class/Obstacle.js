@@ -1,6 +1,6 @@
 class ObsController {
     OBSTACLE_INTERVAL = 100
-    MAX_OBSTALCES = 6
+    MAX_OBSTALCES = 4
 
     obstacles = []
 
@@ -15,7 +15,7 @@ class ObsController {
 
     update(frameDelta) {
         // Hace el update de cada obstaculo (rotacion)
-        this.obstacles.forEach(obs => obs.update(frameDelta));
+        this.obstacles.forEach(obs => obs.update(frameDelta, player));
     }
 
     move(dy) {
@@ -42,7 +42,7 @@ class ObsController {
             const x = this.canvas.width / 2
             const height = obsInfo.radius * 2 + obsInfo.lineWidth + this.OBSTACLE_INTERVAL * this.scaleRatio
 
-            let y = this.canvas.height / 2 - 50 * this.scaleRatio
+            let y = this.canvas.height / 2
             let dy = 0
             for (let i = 0; i < this.obstacles.length; i++) {
                 dy += this.obstacles[i].height
@@ -97,6 +97,8 @@ class Obstacle {
         if (this.currentAngle >= Math.PI * 2) {
             this.currentAngle = 0
         }
+
+        this.handleColition(player)
     }
 
     move(dy) {
@@ -139,4 +141,160 @@ class Obstacle {
             this.ctx.closePath()
         }
     }
+
+    getDistance(playerY) {
+        let result = Math.abs(playerY - this.y)
+        return result
+    }
+
+    getLapPosition() {
+        /* ****
+        * Rangos de las piezas
+        * < 25
+        * 25 - 50
+        * 50 - 75
+        * > 75
+        **** */
+        let laps = this.currentAngle / (Math.PI * 2)
+        let lapAngle = (laps - Math.floor(laps)) * 100
+        return lapAngle
+    }
+
+    getColorColition(playerY) {
+        let lapPos = this.getLapPosition()
+        let clrIndex = null
+    
+        if (playerY - this.y > 0) {
+            // Contacto con parte inferior
+            if (lapPos < 25) {
+                clrIndex = 0
+            } else if (lapPos < 50) {
+                clrIndex = 3
+            } else if (lapPos < 75) {
+                clrIndex = 2
+            } else {
+                clrIndex = 1
+            }
+        } else {
+            // Contacto con parte superior
+            if (lapPos < 25) {
+                clrIndex = 2
+            } else if (lapPos < 50) {
+                clrIndex = 1
+            } else if (lapPos < 75) {
+                clrIndex = 0
+            } else {
+                clrIndex = 3
+            }
+        }
+    
+        return this.colors[clrIndex]
+    }
+
+    checkColition(player) {
+        let distance = this.getDistance(player.y)
+
+        if (distance < (player.radius * 2 + this.radius)) {
+            return true
+        }
+    }
+
+    handleColition(player) {
+        // Evitando colision dentro del circulo, solo en el borde.
+        let distance = this.getDistance(player.y + player.radius)
+
+        let innerSeparation = this.radius - this.lineWidth
+        if ((player.y - this.y) < 0) {
+            innerSeparation -= player.radius
+        } else {
+            innerSeparation += player.radius
+        }
+
+        if (this.checkColition(player) && distance > innerSeparation) {
+            console.log(true)
+            // Controlando que color hizo colicion
+            if (this.getColorColition(player.y) !== player.color) {
+                alert('perdiste')
+            }
+        }
+    }
+
+    // getDistance(playerY) {
+    //     let result = playerY - this.y
+    //     return result
+    // }
+
+    // getLapPosition() {
+    //     /* ****
+    //     * Rangos de las piezas
+    //     * < 25
+    //     * 25 - 50
+    //     * 50 - 75
+    //     * > 75
+    //     **** */
+    //     let laps = this.currentAngle / (Math.PI * 2)
+    //     let lapAngle = (laps - Math.floor(laps)) * 100
+    //     return lapAngle
+    // }
+
+    // getColorColition(playerY) {
+    //     let lapPos = this.getLapPosition()
+    //     let clrIndex = null
+    
+    //     if ((this.getDistance(playerY)) > 0) {
+    //         // Contacto con parte inferior
+    //         if (lapPos < 25) {
+    //             clrIndex = 0
+    //         } else if (lapPos < 50) {
+    //             clrIndex = 3
+    //         } else if (lapPos < 75) {
+    //             clrIndex = 2
+    //         } else {
+    //             clrIndex = 1
+    //         }
+    //     } else {
+    //         // Contacto con parte superior
+    //         if (lapPos < 25) {
+    //             clrIndex = 2
+    //         } else if (lapPos < 50) {
+    //             clrIndex = 1
+    //         } else if (lapPos < 75) {
+    //             clrIndex = 0
+    //         } else {
+    //             clrIndex = 3
+    //         }
+    //     }
+    
+    //     return this.colors[clrIndex]
+    // }
+
+    // checkColition(player) {
+    //     let distance = this.getDistance(player.y + player.radius - this.lineWidth)
+
+    //     let minSeparation = null
+    //     if (distance < 0) {
+    //         minSeparation = this.radius - player.height
+    //     } else {
+    //         minSeparation = this.radius 
+    //     }
+
+    //     if (Math.abs(distance) < minSeparation) {
+    //         return true
+    //     }
+    // }
+
+    // handleColition(player) {
+    //     // Evitando colision dentro del circulo, solo en el borde.
+    //     let distance = this.getDistance(player.y + player.radius)
+
+    //     let innerSeparation = this.radius - this.lineWidth / 2 - player.radius
+
+    //     if (this.checkColition(player) && Math.abs(distance) > innerSeparation) {
+    //         console.log(true)
+    //         // Controlando que color hizo colicion
+    //         if (this.getColorColition(player.y + player.radius) !== player.getPlayerColor()) {
+    //             alert('perdiste')
+    //         }
+    //     }
+    // }
 }
