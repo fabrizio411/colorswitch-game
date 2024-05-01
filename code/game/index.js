@@ -8,8 +8,8 @@ const GAME_WIDTH = 370
 const GAME_HEIGHT = 700
 const PLAYER_RADIUS = 10
 const OBSTACLE_CONFIG = [
-    { radius: 60, rotationSpeed: 1, lineWidth: 10 },
-    { radius: 100, rotationSpeed: 2, lineWidth: 10 },
+    { radius: 60, rotationSpeed: 1.5, lineWidth: 10 },
+    { radius: 100, rotationSpeed: 2, lineWidth: 15 },
     { radius: 150, rotationSpeed: 3, lineWidth: 20 }
 ]
 // Red - Cian - Yellow - Violet

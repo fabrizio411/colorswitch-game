@@ -63,8 +63,8 @@ class Player {
             }
 
             // Limite de caida del player
-            if ((this.y + this.height) >= this.canvas.height) {
-                this.y = this.canvas.height - this.height
+            if ((this.y + this.radius) >= this.canvas.height) {
+                this.y = this.canvas.height - this.radius
             }
         }
     }
