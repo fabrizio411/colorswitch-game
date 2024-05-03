@@ -34,9 +34,6 @@ class Player {
         /////////////////////////////////////////
         /////////////////////////////////////////
         this.jump(frameDelta, background, obsController)
-        // if (this.jumpInProgress) {
-        //     // Check colitions
-        // }
     }
 
     checkJump() {
@@ -71,6 +68,16 @@ class Player {
                 this.y = this.canvas.height - this.radius
             }
         }
+    }
+
+    changeColor() {
+        let actualIndex = this.colors.indexOf(this.color)
+        let newIndex = this.getRandomNumber(0, 3)
+        while (newIndex === actualIndex) {
+            newIndex = this.getRandomNumber(0, 3)
+        }
+
+        this.color = this.colors[newIndex]
     }
 
     draw() {

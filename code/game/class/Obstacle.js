@@ -1,9 +1,10 @@
 class ObsController {
     OBSTACLE_INTERVAL = 125
-    MAX_OBSTALCES = 4
+    MAX_OBSTALCES = 3
     hasStarted = false
 
     obstacles = []
+    countObsCreated = 1
 
     constructor(ctx, obsArray, scaleRatio, colors) {
         this.ctx = ctx
@@ -25,6 +26,9 @@ class ObsController {
         this.obstacles.forEach(obs => {
             obs.update(frameDelta, player)
             obs.point.update(player, score)
+            if (obs.changer !== null) {
+                obs.changer.update(player)
+            }
         });
 
         this.obstacles = this.obstacles.filter(obs => obs.y < this.canvas.height + obs.radius)
@@ -53,6 +57,8 @@ class ObsController {
             }
             /////////////////////////////////////////
             /////////////////////////////////////////
+            
+
             const x = this.canvas.width / 2
             const height = obsInfo.radius * 2 + obsInfo.lineWidth + this.OBSTACLE_INTERVAL * this.scaleRatio
 
@@ -61,7 +67,14 @@ class ObsController {
             for (let i = 0; i < this.obstacles.length; i++) {
                 dy += this.obstacles[i].height
             }
+
             y -= dy + obsInfo.radius
+
+            let changer = null
+            if (this.countObsCreated % this.MAX_OBSTALCES === 0) {
+                let changerY =  y - this.OBSTACLE_INTERVAL * 2 - obsInfo.radius
+                changer = new ColorChanger(this.ctx, x, changerY, this.colors, this.scaleRatio)
+            }
 
             const point = new Point(
                 this.ctx,
@@ -80,10 +93,12 @@ class ObsController {
                 obsInfo.rotationSpeed, 
                 this.scaleRatio, 
                 this.colors,
-                point
+                point,
+                changer,
             )
 
             this.obstacles.push(obstacle)
+            this.countObsCreated++
         }
     }
 
@@ -97,6 +112,7 @@ class ObsController {
 
     reset() {
         this.obstacles = []
+        this.countObsCreated = 1
     }
 
     getRandomNumber(min, max) {
@@ -108,7 +124,7 @@ class ObsController {
 class Obstacle {
     currentAngle = 0
 
-    constructor(ctx, x, y, height, radius, lineWidth, rotationSpeed, scaleRatio, colors, point) {
+    constructor(ctx, x, y, height, radius, lineWidth, rotationSpeed, scaleRatio, colors, point, changer) {
         this.ctx = ctx
         this.x = x
         this.y = y
@@ -119,6 +135,7 @@ class Obstacle {
         this.scaleRatio = scaleRatio
         this.colors = colors,
         this.point = point
+        this.changer = changer
     }
 
     update(frameDelta) {
@@ -134,6 +151,9 @@ class Obstacle {
         this.y += dy
 
         this.point.move(dy)
+        if (this.changer !== null) {
+            this.changer.move(dy)
+        }
     }
 
     draw() {
@@ -172,6 +192,10 @@ class Obstacle {
         }
 
         this.point.draw()
+
+        if (this.changer !== null) {
+            this.changer.draw()
+        }
     }
 
     getDistance(playerY) {
