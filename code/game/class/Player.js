@@ -21,6 +21,9 @@ class Player {
         /* LISTENERS */
         window.removeEventListener('click', () => this.checkJump())
         window.addEventListener('click', () => this.checkJump())
+
+        window.removeEventListener('touchend', () => this.checkJump())
+        window.addEventListener('touchend', () => this.checkJump())
      
     }
 
