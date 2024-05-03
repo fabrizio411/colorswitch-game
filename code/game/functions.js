@@ -46,6 +46,7 @@ function setupGameReset() {
                 bestScore = storageBestScore
             }
         } else {
+            bestScore = runScore
             localStorage.setItem('bestScore', JSON.stringify(bestScore))
         }
 
@@ -57,13 +58,9 @@ function setupGameReset() {
             totalPoints = storageTotalPoints
             localStorage.setItem('totalPoints', JSON.stringify(storageTotalPoints))
         } else {
+            totalPoints += runScore
             localStorage.setItem('totalPoints', JSON.stringify(totalPoints))
         }
-
-
-        
-        
-
 
         setTimeout(() => {
             displayGameOverMenu()
