@@ -56,8 +56,8 @@
 
 @mixin board() {
     background-color: var.$bg;
-    height: var.$height;
-    width: var.$width;
+    height: 100vh;
+    aspect-ratio: 370 / 700;
     padding: 15px;
     box-shadow:  20px 20px 60px #2a282b, -20px -20px 60px #38363a;
     display: flex;

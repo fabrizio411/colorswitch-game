@@ -26,6 +26,64 @@ function getScaleRatio() {
     }
 }
 
+/* MENU CONTROLLERS */
+function showGameOver() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+}
+
+function setupGameReset() {
+    if (!hasOpenedMenu) {
+        hasOpenedMenu = true
+        runScore = score.points
+
+        let storageBestScore = localStorage.getItem('bestScore')
+        if (storageBestScore !== null) {
+            storageBestScore = JSON.parse(storageBestScore)
+            if (runScore > storageBestScore) {
+                bestScore = runScore
+                localStorage.setItem('bestScore', JSON.stringify(bestScore))
+            } else {
+                bestScore = storageBestScore
+            }
+        } else {
+            localStorage.setItem('bestScore', JSON.stringify(bestScore))
+        }
+
+        let storageTotalPoints = localStorage.getItem('totalPoints')
+        if (storageTotalPoints !== null) {
+            storageTotalPoints = JSON.parse(storageTotalPoints)
+
+            storageTotalPoints += runScore
+            totalPoints = storageTotalPoints
+            localStorage.setItem('totalPoints', JSON.stringify(storageTotalPoints))
+        } else {
+            localStorage.setItem('totalPoints', JSON.stringify(totalPoints))
+        }
+
+
+        
+        
+
+
+        setTimeout(() => {
+            displayGameOverMenu()
+        }, 500);
+    }
+}
+
+function reset() {
+    document.querySelector('#end-menu').style.display = 'none'
+    hasOpenedMenu = false
+    gameOver = false
+
+    playerColorMemory = null
+    obstaclesMemory = []
+
+    obsController.reset()
+    score.reset()
+    player.reset()
+}
+
 /* CANVAS RESET */
 function clearScreen() {
     // Borra todos los sprites del canvas

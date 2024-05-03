@@ -95,6 +95,10 @@ class ObsController {
         return this.obstacles.some(obs => obs.collideWith(player))
     }
 
+    reset() {
+        this.obstacles = []
+    }
+
     getRandomNumber(min, max) {
         // Obtiene un numero random entre el minimo y el maximo
         return Math.floor(Math.random() * (max - min + 1) + min)

@@ -3,6 +3,13 @@ const canvas = document.querySelector('#canvas')
 const ctx = canvas.getContext('2d')
 
 
+/* GLOBAL GAME RECORDS */
+let runScore = null
+let bestScore = 0
+let totalPoints = 0
+
+
+
 /* DECLARACION DE CONSTANTES */
 const GAME_WIDTH = 370
 const GAME_HEIGHT = 700
@@ -18,6 +25,7 @@ const COLORS = ['#fc0083','#35e2eb','#f4eb43','#7233cf']
 
 /* GAME STATE */
 let gameOver = false
+let hasOpenedMenu = false
 
 
 /* DECLARACION DE VARIABLES */ 
@@ -26,7 +34,6 @@ let playerColorMemory = null
 let scaleRatio = null
 let previousTime = null
 let player = null
-let background = null
 let obsController = null
 let score = null
 
@@ -59,6 +66,7 @@ function gameLoop(currentTime) {
 
     if (!gameOver && obsController.collideWith(player)) {
         gameOver = true
+        setupGameReset()
     }
 
     // Draw game objects

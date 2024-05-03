@@ -71,4 +71,8 @@ class Score {
         this.ctx.fillStyle = this.color
         this.ctx.fillText(this.points, this.x, this.y)
     }
+
+    reset() {
+        this.points = 0
+    }
 }

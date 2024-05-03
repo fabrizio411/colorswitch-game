@@ -5,8 +5,8 @@ canvas {
 
 .board {
   background-color: #312f32;
-  height: 700px;
-  width: 370px;
+  height: 100vh;
+  aspect-ratio: 370/700;
   padding: 15px;
   box-shadow: 20px 20px 60px #2a282b, -20px -20px 60px #38363a;
   display: flex;
@@ -14,6 +14,10 @@ canvas {
   justify-content: space-between;
   padding: 0;
   display: none;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .title {
@@ -187,6 +191,11 @@ canvas {
   flex-direction: column;
   align-items: center;
 }
+.buttons .stars-box .text {
+  color: #afafaf;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
 .buttons .stars-box .number {
   font-size: 2rem;
   color: #f3e775;
@@ -247,6 +256,9 @@ canvas {
 }
 .back-btn:hover svg {
   fill: #fcfcfc;
+}
+.back-btn svg {
+  fill: #afafaf;
 }
 
 /*# sourceMappingURL=play.css.map */

@@ -10,11 +10,63 @@
 <body>
 
   <canvas id="canvas"></canvas>
+
+
+  <div class="board" id="end-menu">
+    <div class="title">
+      <div class="title">
+        <div class="text">
+          <p class="letter">C</p>
+          <div class="text-cir l">
+            <div class="quarter q1"></div>
+            <div class="quarter q2"></div>
+            <div class="quarter q3"></div>
+            <div class="quarter q4"></div>
+            <div class="inner-cir"></div>
+          </div>
+          <p class="letter">L</p>
+          <div class="text-cir r">
+            <div class="quarter q1"></div>
+            <div class="quarter q2"></div>
+            <div class="quarter q3"></div>
+            <div class="quarter q4"></div>
+            <div class="inner-cir"></div>
+          </div>
+          <p class="letter">R</p>
+        </div>
+        <h1 class="letter overlap">IfElse</h1>
+    </div>
+
+    <div class="score-box">
+      <p class="text">Score</p>
+      <p class="score" id="runScore"></p>
+    </div>
+    <div class="score-box">
+      <p class="text best">Best Score</p>
+      <p class="score" id="bestScore"></p>
+    </div>
+
+    <div class="buttons">
+      <div class="stars-box">
+        <p class="text">Points</p>
+        <p class="number" id="totalPoints"></p>
+      </div>
+      <p class="play-btn" id="restart-btn">
+        <svg height="32px" style="enable-background:new 0 0 32 32;" version="1.1" viewBox="0 0 32 32" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28,16c-1.219,0-1.797,0.859-2,1.766C25.269,21.03,22.167,26,16,26c-5.523,0-10-4.478-10-10S10.477,6,16,6  c2.24,0,4.295,0.753,5.96,2H20c-1.104,0-2,0.896-2,2s0.896,2,2,2h6c1.104,0,2-0.896,2-2V4c0-1.104-0.896-2-2-2s-2,0.896-2,2v0.518  C21.733,2.932,18.977,2,16,2C8.268,2,2,8.268,2,16s6.268,14,14,14c9.979,0,14-9.5,14-11.875C30,16.672,28.938,16,28,16z"/></svg>
+      </p>
+    </div>
+
+    <a class="back-btn" href="../index.html">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="m21.743 12.331-9-10c-.379-.422-1.107-.422-1.486 0l-9 10a.998.998 0 0 0-.17 1.076c.16.361.518.593.913.593h2v7a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-4h4v4a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-7h2a.998.998 0 0 0 .743-1.669z"></path></svg>
+    </a>
+  </div>
+
   
 </body>
 <script src="../code/game/class/Point.js"></script>
 <script src="../code/game/class/Player.js"></script>
 <script src="../code/game/class/Obstacle.js"></script>
 <script src="../code/game/functions.js"></script>
+<script src="../code/game/menus.js"></script>
 <script src="../code/game/index.js"></script>
 </html>

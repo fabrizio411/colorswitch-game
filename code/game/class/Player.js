@@ -16,6 +16,7 @@ class Player {
 
         this.x = this.canvas.width / 2
         this.y = this.canvas.height - 75 * scaleRatio
+        this.startY = this.canvas.height - 75 * scaleRatio
 
         /* LISTENERS */
         window.removeEventListener('click', () => this.checkJump())
@@ -82,6 +83,10 @@ class Player {
         )
         this.ctx.fill()
         this.ctx.closePath()
+    }
+
+    reset() {
+        this.y = this.startY
     }
 
     getRandomNumber(min, max) {
