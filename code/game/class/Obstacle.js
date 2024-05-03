@@ -91,6 +91,10 @@ class ObsController {
         this.obstacles.forEach(obs => obs.draw());
     }
 
+    collideWith(player) {
+        return this.obstacles.some(obs => obs.collideWith(player))
+    }
+
     getRandomNumber(min, max) {
         // Obtiene un numero random entre el minimo y el maximo
         return Math.floor(Math.random() * (max - min + 1) + min)
@@ -119,8 +123,6 @@ class Obstacle {
         if (this.currentAngle >= Math.PI * 2) {
             this.currentAngle = 0
         }
-
-        this.handleColition(player)
     }
 
     move(dy) {
@@ -225,21 +227,20 @@ class Obstacle {
         }
     }
 
-    handleColition(player) {
+    collideWith(player) {
         // Evitando colision dentro del circulo, solo en el borde.
         let distance = this.getDistance(player.y + player.radius)
 
         let innerSeparation = this.radius - this.lineWidth
         if ((player.y - this.y) < 0) {
-            innerSeparation -= player.radius
+            innerSeparation -= player.radius * 1.5
         } else {
-            innerSeparation += player.radius
         }
 
         if (this.checkColition(player) && distance > innerSeparation) {
             // Controlando que color hizo colicion
             if (this.getColorColition(player.y) !== player.color) {
-                alert('perdiste')
+                return true
             }
         }
     }

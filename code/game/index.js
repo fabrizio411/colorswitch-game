@@ -16,6 +16,10 @@ const OBSTACLE_CONFIG = [
 const COLORS = ['#fc0083','#35e2eb','#f4eb43','#7233cf']
 
 
+/* GAME STATE */
+let gameOver = false
+
+
 /* DECLARACION DE VARIABLES */ 
 let obstaclesMemory = []
 let playerColorMemory = null
@@ -48,8 +52,14 @@ function gameLoop(currentTime) {
 
     clearScreen()
     // Update game objects
-    player.update(frameDelta, bgMove)
-    obsController.update(frameDelta, player, score)
+    if (!gameOver) {
+        player.update(frameDelta, bgMove)
+        obsController.update(frameDelta, player, score)
+    }
+
+    if (!gameOver && obsController.collideWith(player)) {
+        gameOver = true
+    }
 
     // Draw game objects
     obsController.draw()
