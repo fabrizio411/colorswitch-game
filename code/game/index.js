@@ -24,6 +24,7 @@ let previousTime = null
 let player = null
 let background = null
 let obsController = null
+let score = null
 
 
 /* SCREEN Y DIMENSIONES */
@@ -48,11 +49,12 @@ function gameLoop(currentTime) {
     clearScreen()
     // Update game objects
     player.update(frameDelta, bgMove)
-    obsController.update(frameDelta, player)
+    obsController.update(frameDelta, player, score)
 
     // Draw game objects
     obsController.draw()
     player.draw()
+    score.draw()
 
     requestAnimationFrame(gameLoop)
 }

@@ -1,6 +1,7 @@
 class ObsController {
-    OBSTACLE_INTERVAL = 100
+    OBSTACLE_INTERVAL = 125
     MAX_OBSTALCES = 4
+    hasStarted = false
 
     obstacles = []
 
@@ -13,9 +14,20 @@ class ObsController {
         
     }
 
-    update(frameDelta) {
+    update(frameDelta, player, score) {
+        this.createObstacle()
         // Hace el update de cada obstaculo (rotacion)
-        this.obstacles.forEach(obs => obs.update(frameDelta, player));
+
+        if (this.obstacles.length === this.MAX_OBSTALCES) {
+            this.hasStarted = true
+        }
+
+        this.obstacles.forEach(obs => {
+            obs.update(frameDelta, player)
+            obs.point.update(player, score)
+        });
+
+        this.obstacles = this.obstacles.filter(obs => obs.y < this.canvas.height + obs.radius)
     }
 
     move(dy) {
@@ -31,11 +43,13 @@ class ObsController {
             let obsInfo = null
             /////////////////////////////////////////
             //// GLOBAL VARIABLE USAGE (WARNING) ////
-            if (obstaclesMemory.length === this.MAX_OBSTALCES) {
+            if (obstaclesMemory.length === this.MAX_OBSTALCES && !this.hasStarted) {
                 obsInfo = this.obsArray[obstaclesMemory[this.obstacles.length]]
             } else {
-                obsInfo = this.obsArray[index] // TODO 1: (cuidado con rezise de pantalla)
-                obstaclesMemory.push(index)
+                obsInfo = this.obsArray[index]
+                if (!this.hasStarted) {
+                    obstaclesMemory.push(index)
+                }
             }
             /////////////////////////////////////////
             /////////////////////////////////////////
@@ -49,6 +63,13 @@ class ObsController {
             }
             y -= dy + obsInfo.radius
 
+            const point = new Point(
+                this.ctx,
+                x,
+                y,
+                15 * this.scaleRatio,
+            )
+
             const obstacle = new Obstacle(
                 this.ctx, 
                 x, 
@@ -58,7 +79,8 @@ class ObsController {
                 obsInfo.lineWidth, 
                 obsInfo.rotationSpeed, 
                 this.scaleRatio, 
-                this.colors
+                this.colors,
+                point
             )
 
             this.obstacles.push(obstacle)
@@ -66,7 +88,6 @@ class ObsController {
     }
 
     draw() {
-        this.createObstacle()
         this.obstacles.forEach(obs => obs.draw());
     }
 
@@ -79,7 +100,7 @@ class ObsController {
 class Obstacle {
     currentAngle = 0
 
-    constructor(ctx, x, y, height, radius, lineWidth, rotationSpeed, scaleRatio, colors) {
+    constructor(ctx, x, y, height, radius, lineWidth, rotationSpeed, scaleRatio, colors, point) {
         this.ctx = ctx
         this.x = x
         this.y = y
@@ -88,7 +109,8 @@ class Obstacle {
         this.lineWidth = lineWidth
         this.rotationSpeed = rotationSpeed
         this.scaleRatio = scaleRatio
-        this.colors = colors
+        this.colors = colors,
+        this.point = point
     }
 
     update(frameDelta) {
@@ -104,6 +126,8 @@ class Obstacle {
     move(dy) {
         // Update del movimiento del obstaculo con el fondo
         this.y += dy
+
+        this.point.move(dy)
     }
 
     draw() {
@@ -140,6 +164,8 @@ class Obstacle {
             this.ctx.stroke()
             this.ctx.closePath()
         }
+
+        this.point.draw()
     }
 
     getDistance(playerY) {
@@ -211,90 +237,10 @@ class Obstacle {
         }
 
         if (this.checkColition(player) && distance > innerSeparation) {
-            console.log(true)
             // Controlando que color hizo colicion
             if (this.getColorColition(player.y) !== player.color) {
                 alert('perdiste')
             }
         }
     }
-
-    // getDistance(playerY) {
-    //     let result = playerY - this.y
-    //     return result
-    // }
-
-    // getLapPosition() {
-    //     /* ****
-    //     * Rangos de las piezas
-    //     * < 25
-    //     * 25 - 50
-    //     * 50 - 75
-    //     * > 75
-    //     **** */
-    //     let laps = this.currentAngle / (Math.PI * 2)
-    //     let lapAngle = (laps - Math.floor(laps)) * 100
-    //     return lapAngle
-    // }
-
-    // getColorColition(playerY) {
-    //     let lapPos = this.getLapPosition()
-    //     let clrIndex = null
-    
-    //     if ((this.getDistance(playerY)) > 0) {
-    //         // Contacto con parte inferior
-    //         if (lapPos < 25) {
-    //             clrIndex = 0
-    //         } else if (lapPos < 50) {
-    //             clrIndex = 3
-    //         } else if (lapPos < 75) {
-    //             clrIndex = 2
-    //         } else {
-    //             clrIndex = 1
-    //         }
-    //     } else {
-    //         // Contacto con parte superior
-    //         if (lapPos < 25) {
-    //             clrIndex = 2
-    //         } else if (lapPos < 50) {
-    //             clrIndex = 1
-    //         } else if (lapPos < 75) {
-    //             clrIndex = 0
-    //         } else {
-    //             clrIndex = 3
-    //         }
-    //     }
-    
-    //     return this.colors[clrIndex]
-    // }
-
-    // checkColition(player) {
-    //     let distance = this.getDistance(player.y + player.radius - this.lineWidth)
-
-    //     let minSeparation = null
-    //     if (distance < 0) {
-    //         minSeparation = this.radius - player.height
-    //     } else {
-    //         minSeparation = this.radius 
-    //     }
-
-    //     if (Math.abs(distance) < minSeparation) {
-    //         return true
-    //     }
-    // }
-
-    // handleColition(player) {
-    //     // Evitando colision dentro del circulo, solo en el borde.
-    //     let distance = this.getDistance(player.y + player.radius)
-
-    //     let innerSeparation = this.radius - this.lineWidth / 2 - player.radius
-
-    //     if (this.checkColition(player) && Math.abs(distance) > innerSeparation) {
-    //         console.log(true)
-    //         // Controlando que color hizo colicion
-    //         if (this.getColorColition(player.y + player.radius) !== player.getPlayerColor()) {
-    //             alert('perdiste')
-    //         }
-    //     }
-    // }
 }

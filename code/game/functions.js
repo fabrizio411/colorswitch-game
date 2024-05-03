@@ -35,6 +35,8 @@ function clearScreen() {
 function createSprites() {
     // Crea todos los sprites
     // Teniendo en cuanta la escala de la screen
+    score = new Score(ctx, scaleRatio)
+
     const playerRadiusInGame = PLAYER_RADIUS * scaleRatio
 
     let playerColor = null
